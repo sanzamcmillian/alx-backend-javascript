@@ -1,4 +1,4 @@
-const fs = require('fs')
+const fs = require('fs');
 
 
 const countStudents = (dataPath) => {
@@ -24,15 +24,19 @@ const countStudents = (dataPath) => {
         if (!Object.keys(studentGroup).includes(field)) {
             studentGroup[field] = [];
         }
-        const totalStudents = Object
-          .values(studentGroup)
-          .reduce((pre, cur) => (pre || []).length + cur.length);
-        console.log(`Number of students: ${totalStudents}`);
-        for (const [field, group] of Object.entries(studentGroup)) {
-            const studentNames = group.map((student) => student.firstname).join(', ');
-            console.log(`Number of students in ${field}: ${group.length}. List: ${studentNames}`);
-        }
-    };
+        const studentEntries = studentPropNames
+          .map((propName, idx) => [propName, studentPropValues[idx]]);
+        studentGroup[field].push(Object.fromEntries(studentEntries));
+    }
+
+    const totalStudents = Object
+      .values(studentGroup)
+      .reduce((pre, cur) => (pre || []).length + cur.length);
+      console.log(`Number of students: ${totalStudents}`);
+      for (const [field, group] of Object.entries(studentGroup)) {
+        const studentNames = group.map((student) => student.firstname).join(', ');
+        console.log(`Number of students in ${field}: ${group.length}. List: ${studentNames}`);
+      }
 };
 
 module.exports = countStudents;
