@@ -8,6 +8,6 @@ process.stdin.on('readable', () => {
     }
 });
 
-process.stdin.on('end', () => {
+process.stdin.on('readable', () => {
     process.stdout.write('This important softare is closing now\n');
 });
